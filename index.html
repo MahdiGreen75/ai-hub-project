@@ -10,12 +10,29 @@
 </head>
 
 <body>
-    <header>
-
+    <header class="flex flex-col items-center justify-center gap-4">
+        <h1 class="text-center font-bold text-2xl my-1">AI Universe Hub</h1>
+        <div class="bg-slate-200 border rounded-xl px-4 py-3 shadow-xl mb-4 space-y-1">
+            <p class="text-sm font-extrabold">Do you want to sort by date? </p>
+            <span>
+                <span class="flex flex-row items-center gap-1"><input type="radio" name="sort" id="ascending"> <label
+                        for="ascending" class="text-xs font-light">Ascending Order</label>
+                </span>
+                <span class="flex flex-row items-center gap-1"> <input type="radio" name="sort" id="descending"> <label
+                        for="descending" class="text-xs font-light">Descending Order</label>
+                </span>
+                <span class="flex flex-row items-center gap-1"> <input checked type="radio" name="sort" id="default">
+                    <label for="default" class="text-xs font-light">Default Order</label>
+                </span>
+            </span>
+            <div class="w-full flex flex-row justify-end"> <button
+                    class="text-xs text-white font-bold px-3 py-1 bg-blue-400 rounded hover:bg-blue-500">Apply</button>
+            </div>
+        </div>
     </header>
     <main>
         <section class="sm:max-w-xl md:max-w-2xl lg:max-w-4xl mx-auto">
-            <div id="grid-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div id="grid-container" class="grid grid-cols-1  sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <!-- card 1 sample -->
                 <!-- <div  class="rounded-2xl space-y-2 p-4 border border-gray-200 shadow-md">
                     <div class="rounded-2xl">
@@ -55,6 +72,11 @@
                     </div>
                 </div> -->
                 <!-- dynamic cards will be added here -->
+
+            </div>
+            <div class="w-full flex flex-row justify-center my-4">
+                <button onclick="showAllBtn()" id= "show-all-btn"
+                    class="text-xs text-white font-bold px-4 py-2 bg-blue-400 rounded hover:bg-blue-500">See More</button>
             </div>
             <div class="modal">
 

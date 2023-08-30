@@ -106,19 +106,29 @@ const dynamicMarkup = (imgSrc, features = [], date, productTitle) => {
 }
 
 
-const dynamicCardsReloader = async () => {
+const dynamicCardsReloader = async (toggler=null) => {
     const link = `https://openapi.programming-hero.com/api/ai/tools`;
     const res = await fetch(link);
     const data = await res.json();
     const dataStream = data.data.tools;
+    const gridContainer = document.getElementById("grid-container");
+    gridContainer.innerText = "";
+    let slicedDataStream;
+
+    if(!toggler) {
+        slicedDataStream = dataStream.slice(0, 6);
+    } else {
+        slicedDataStream = dataStream;
+
+    }
 
     // sort functionality on pressing button
     // Ascending order
-    const sortedArrASC = dataStream.sort((a, b) => new Date(a.published_in).getTime() - new Date(b.published_in).getTime());
+    const sortedArrASC = slicedDataStream.sort((a, b) => new Date(a.published_in).getTime() - new Date(b.published_in).getTime());
     
     // Descending order
-    const sortedArrDSC = dataStream.sort((a, b) => new Date(a.published_in).getTime() - new Date(b.published_in).getTime());
-    dataStream.forEach(item => {
+    const sortedArrDSC = slicedDataStream.sort((a, b) => new Date(a.published_in).getTime() - new Date(b.published_in).getTime());
+    slicedDataStream.forEach(item => {
         let { description, features, id, image, links, name, published_in } = item;
         // console.log(description, features, id, image, links, name, published_in);
         dynamicMarkup(image, features, published_in, name);
@@ -127,6 +137,11 @@ const dynamicCardsReloader = async () => {
 }
 
 dynamicCardsReloader();
+
+const showAllBtn = () => {
+    dynamicCardsReloader(true);
+    console.log("clicked");
+}
 
 
 
