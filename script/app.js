@@ -52,7 +52,10 @@ const dynamicMarkup = (imgSrc, features = [], date, productTitle) => {
     [li1.innerText, li2.innerText, li3.innerText] = features;
     ol.appendChild(li1);
     ol.appendChild(li2);
-    ol.appendChild(li3);
+
+    if (li3.innerText) {
+        ol.appendChild(li3);
+    }
 
     const divider = tag("div");
     divider.classList = "bg-slate-200 w-full mx-auto border";
@@ -102,13 +105,29 @@ const dynamicMarkup = (imgSrc, features = [], date, productTitle) => {
     console.dir(cardWrapper);
 }
 
-let getCachedDataFromApi ;
-const getCardsDataFromApi = async() => {
+
+const dynamicCardsReloader = async () => {
     const link = `https://openapi.programming-hero.com/api/ai/tools`;
     const res = await fetch(link);
     const data = await res.json();
-    getCachedDataFromApi = data.data.tools;
+    const dataStream = data.data.tools;
+
+    // sort functionality on pressing button
+    // Ascending order
+    const sortedArrASC = dataStream.sort((a, b) => new Date(a.published_in).getTime() - new Date(b.published_in).getTime());
+    
+    // Descending order
+    const sortedArrDSC = dataStream.sort((a, b) => new Date(a.published_in).getTime() - new Date(b.published_in).getTime());
+    dataStream.forEach(item => {
+        let { description, features, id, image, links, name, published_in } = item;
+        // console.log(description, features, id, image, links, name, published_in);
+        dynamicMarkup(image, features, published_in, name);
+    })
+
 }
 
-getCardsDataFromApi();
-console.log(typeof getCachedDataFromApi, getCachedDataFromApi);
+dynamicCardsReloader();
+
+
+
+
